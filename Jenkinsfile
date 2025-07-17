@@ -1,6 +1,7 @@
 node {
     CONTAINER_REGISTRY = 'sivarp'
     COMPONENT = "gists-api"
+    PUBLISH_CRED = 'docker-hub-rw-cred'
 
     def now = new Date()
     String timestamp = now.format("yyMMddHHmm", TimeZone.getTimeZone('UTC'))
@@ -26,6 +27,10 @@ node {
     stage("Publish to Docker") {
         // anonymous publish or use withcreds
         String version = readFile("VERSION").trim()
-        sh "docker push ${CONTAINER_REGISTRY}/${COMPONENT}:${version}-${timestamp}"
+        withCredentials([usernamePassword(credentialsId: PUBLISH_CRED, passwordVariable: 'API_TOKEN', usernameVariable: 'USER')]) {
+            sh "docker login -u ${USER} -p ${API_TOKEN}"
+            sh "docker push ${CONTAINER_REGISTRY}/${COMPONENT}:${version}-${timestamp}"
+        }
+        
     }
 }
