@@ -1,0 +1,9 @@
+Requirement
+----------------
+1. CI/CD pipeline with tools of choice
+    - Build using prev assignment code (Docker image)
+    - Publish it to public registry (docker hub)
+    - Production env
+    - Deploy to k8s cluster
+
+2. Kubernetes cluster
