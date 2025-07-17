@@ -26,6 +26,6 @@ node {
     stage("Publish to Docker") {
         // anonymous publish or use withcreds
         String version = readFile("VERSION").trim()
-        sh "docker publish ${CONTAINER_REGISTRY}/${COMPONENT}:${version}-${timestamp}"
+        sh "docker push ${CONTAINER_REGISTRY}/${COMPONENT}:${version}-${timestamp}"
     }
 }
